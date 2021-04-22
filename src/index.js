@@ -1,13 +1,12 @@
-async function requestGithubUser(githubLogin) {
-  try {
-    const response = await fetch(
-      `https://api.github.com/users/${githubLogin}`
-    );
-    const userData = await response.json();
-    console.log(userData);
-  } catch (error) {
-    console.error(error);
-  }
-}
+import React from "react";
+import ReactDOM from "react-dom";
 
-requestGithubUser("moonhighway");
+import App from "./App";
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  rootElement
+);
