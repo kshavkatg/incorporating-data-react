@@ -21,7 +21,7 @@ export function useFetch(uri) {
   };
 }
 
-export function useIterator(items = [], initialIndex = 0) {
+export const useIterator = (items = [], initialIndex = 0) => {
   const [i, setIndex] = useState(initialIndex)
 
   const prev = useCallback(() => {
@@ -34,7 +34,7 @@ export function useIterator(items = [], initialIndex = 0) {
     setIndex(i + 1)
   }, [i])
 
-  const item = useMemo(() => item[i], [i])
+  const item = useMemo(() => items[i], [i])
 
   return [item || items[i], prev, next];
 }

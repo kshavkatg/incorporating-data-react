@@ -1,14 +1,6 @@
 import React from 'react'
 import Fetch from './Fetch'
-
-export default function GitHubUser({ login }) {
-  return (
-    <Fetch
-      uri={`https://api.github.com/users/${login}`}
-      renderSuccess={UserDetails}
-    />
-  );
-}
+import {UserRepositories} from './UserRepositories'
 
 function UserDetails({ data }) {
   return (
@@ -19,6 +11,19 @@ function UserDetails({ data }) {
         {data.name && <p>{data.name}</p>}
         {data.location && <p>{data.location}</p>}
       </div>
+      <UserRepositories
+        login={data.login}
+        onSelect={repoName => console.log(`${repoName} selected`)}
+      />    
     </div>
+  );
+}
+
+export default function GitHubUser({ login }) {
+  return (
+    <Fetch
+      uri={`https://api.github.com/users/${login}`}
+      renderSuccess={UserDetails}
+    />
   );
 }
