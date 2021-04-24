@@ -11,6 +11,7 @@ export function UserRepositories({ login, selectedRepo, onSelect = f => f }) {
           repositories={data}
           selectedRepo={selectedRepo}
           onSelect={onSelect}
+          login={login}
         />
       )}
     />
