@@ -1,21 +1,22 @@
 import { useState, useEffect} from 'react'
 
-export default function useFetch(url) {
-  const [data, setData] = useState()
-  const [error, setError] = useState()
-  const [loading, setLoading] = useState()
+export default function useFetch(uri) {
+  const [data, setData] = useState();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if(!url) return;
-    setLoading(true)
-    fetch(url)
-      .then(response => response.json())
+    if (!uri) return;
+    fetch(uri)
+      .then(data => data.json())
       .then(setData)
       .then(() => setLoading(false))
-      .catch(setError)
-  }, [url])
+      .catch(setError);
+  }, [uri]);
 
   return {
-    data, error, loading
-  }
+    loading,
+    data,
+    error
+  };
 }
