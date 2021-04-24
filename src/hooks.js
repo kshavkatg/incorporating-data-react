@@ -1,6 +1,6 @@
 import { useState, useEffect} from 'react'
 
-export default function useFetch(uri) {
+export function useFetch(uri) {
   const [data, setData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
@@ -19,4 +19,20 @@ export default function useFetch(uri) {
     data,
     error
   };
+}
+
+export function useIterator(items = [], initialIndex = 0) {
+  const [i, setIndex] = useState(initialIndex)
+
+  const prev = () => {
+    if(i === 0) return setIndex(items.length - 1)
+    setIndex(i - 1)
+  }
+
+  const next = () => {
+    if(i === items.length - 1) return setIndex(0)
+    setIndex(i + 1)
+  }
+
+  return [items[i], prev, next];
 }
