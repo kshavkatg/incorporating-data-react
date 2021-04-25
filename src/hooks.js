@@ -38,3 +38,13 @@ export const useIterator = (items = [], initialIndex = 0) => {
 
   return [item || items[i], prev, next];
 }
+
+export const useInput = initialValue => {
+  const [ value, setValue ] = useState(initialValue)
+
+  return [
+    { value, onChange: e => setValue(e.target.value) },
+    () => setValue(initialValue)
+  ]
+  
+}
