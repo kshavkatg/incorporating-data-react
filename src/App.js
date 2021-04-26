@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import GitHubUser from './GitHubUser'
 import {UserRepositories} from './UserRepositories'
 import RepositoryReadme from './RepositoryReadme'
@@ -25,7 +25,7 @@ const client = new GraphQLClient(
   "https://api.github.com/graphql",
   {
     headers: {
-      Authorization: "token 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"
+      Authorization: "token ___"
     }
   }
 )
@@ -37,21 +37,33 @@ client
   .catch(console.error)
 
 
-  
+
 export default function App() {
   const [login, setLogin] = useState()
-  const [repo, setRepo] = useState()
+  const [userData, setUserData] = useState()
+  const [repository, setRepository] = useState()
+
+  useEffect(() => {
+    client
+      .request(query, {login})
+      .then(({user}) => user)
+      .then(setUserData)
+      .catch(console.error)
+  }, [client, query, login])
+
+ if(!userData) return <p>Loading...</p>
 
   return (
     <>
       <SearchForm setLogin={setLogin} value={login} />
-      {login && <GitHubUser login={login} />}
+      {login && <GitHubUser data={userData} />}
       {login && <UserRepositories
-          repo={repo}
-          login={login}
-          onSelect={setRepo}
+          allRepositories={userData.repositories}
+          repo={repository}
+          login={userData.login}
+          onSelect={setRepository}
       />}
-      {login && repo && <RepositoryReadme login={login} repo={repo} />} 
+      {login && repository && <RepositoryReadme login={login} repo={repository} />} 
     </>
   )
 }
