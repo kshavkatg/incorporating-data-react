@@ -5,19 +5,19 @@ import RepositoryReadme from './RepositoryReadme'
 import SearchForm from './SearchForm'
 
 export default function App() {
-  const [login, setLogin] = useState("moonhighway")
-  const [repo, setRepo] = useState("javascript-pro")
+  const [login, setLogin] = useState()
+  const [repo, setRepo] = useState()
 
   return (
     <>
-      <SearchForm setLogin={setLogin} />
-      <GitHubUser login={login} />
-      <UserRepositories
+      <SearchForm setLogin={setLogin} value={login} />
+      {login && <GitHubUser login={login} />}
+      {login && <UserRepositories
           repo={repo}
           login={login}
           onSelect={setRepo}
-      />
-      <RepositoryReadme login={login} repo={repo} /> 
+      />}
+      {login && repo && <RepositoryReadme login={login} repo={repo} />} 
     </>
   )
 }
